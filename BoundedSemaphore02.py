@@ -6,19 +6,20 @@ N = 8
 
 def task(common, tid, semaphore):
     a = 0
-    semaphore.acquire()
-    try:
-        for i in range(100):
-            print(f'{tid}−{i}: Non−critical Section')
-            a += 1
-            print(f'{tid}−{i}: End of non−critical Section')
+    for i in range(100):
+        print(f'{tid}−{i}: Non−critical Section')
+        a += 1
+        print(f'{tid}−{i}: End of non−critical Section')
+        semaphore.acquire()
+        
+        try:
             print(f'{tid}−{i}: Critical section')
             v = common.value + 1
             print(f'{tid}−{i}: Inside critical section')
             common.value = v
             print(f'{tid}−{i}: End of critical section')
-    finally:
-        semaphore.release()
+        finally:
+            semaphore.release()
             
         
 def main():
